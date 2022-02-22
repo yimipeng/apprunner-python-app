@@ -5,5 +5,7 @@ RUN yum install python3.7 -y && curl -O https://bootstrap.pypa.io/get-pip.py && 
 COPY . /app
 WORKDIR /app
 RUN pip3 install -r requirements.txt
-CMD python3 app.py
+RUN opentelemetry-bootstrap --action=install
+ENV OTEL_RESOURCE_ATTRIBUTES='service.name=demo-web-app'
+CMD OTEL_PROPAGATORS=xray OTEL_PYTHON_ID_GENERATOR=xray opentelemetry-instrument python3 app.py
 EXPOSE 8080
