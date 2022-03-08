@@ -7,10 +7,14 @@ build:
       - opentelemetry-bootstrap --action=install
 
 run:
-  command: OTEL_PROPAGATORS=xray OTEL_PYTHON_ID_GENERATOR=xray opentelemetry-instrument python3 app.py
+  command: opentelemetry-instrument python3 app.py
   network:
     port: 8080
   env:
+    - name: OTEL_PROPAGATORS
+      value: xray
+    - name: OTEL_PYTHON_ID_GENERATOR
+      value: xray
     - name: OTEL_PYTHON_DISABLED_INSTRUMENTATIONS
       value: urllib3
     - name: OTEL_RESOURCE_ATTRIBUTES
