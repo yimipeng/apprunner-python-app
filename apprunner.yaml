@@ -3,11 +3,11 @@ runtime: python3
 build:
   commands:
     build:
-      - pip3 install -r requirements.txt
+      - pip install -r requirements.txt
       - opentelemetry-bootstrap --action=install
 
 run:
-  command: opentelemetry-instrument python3 app.py
+  command: opentelemetry-instrument python app.py
   network:
     port: 8080
   env:
